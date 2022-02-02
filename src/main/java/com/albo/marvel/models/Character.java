@@ -5,28 +5,49 @@
  */
 package com.albo.marvel.models;
 
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- *
- * @author Avelino
- */
 @Entity
 @Table(name = "character")
-public class Character {
-    
+@Setter
+@Getter
+public class Character implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
-    public Integer id;
+    private Integer id;
+
+    @Column
+    private String username;
     
     @Column
-    public String name;
+    private String name;
     
-    public Set<Colaborator> colaborators;
+    @OneToMany(mappedBy = "character")
+    private List<Relation> relations;
     
-    public Set<Comic> comics;
-    
+    @Column(name = "last_sync",
+            insertable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastSync;
+
+    public Character(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 }

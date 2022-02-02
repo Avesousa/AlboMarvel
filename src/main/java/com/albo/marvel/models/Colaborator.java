@@ -5,8 +5,11 @@
  */
 package com.albo.marvel.models;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -20,16 +23,16 @@ import lombok.Setter;
 @Table(name = "Colaborator")
 @Setter
 @Getter
-public class Colaborator {
+public class Colaborator implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
     
     @Id
-    public Integer id;
-    
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
     @Column
-    public String name;
-    
+    private String name;
     @Column
-    public String type;
-    
+    private String type;
     
 }

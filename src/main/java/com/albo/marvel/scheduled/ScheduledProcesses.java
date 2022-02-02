@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albo.marvel.modelsAPI;
+package com.albo.marvel.scheduled;
 
 /**
  *
  * @author Avelino
  */
-public class CharacterAPI {
+public class ScheduledProcesses {
     
 }

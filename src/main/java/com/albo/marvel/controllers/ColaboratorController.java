@@ -5,6 +5,8 @@
  */
 package com.albo.marvel.controllers;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("colaborators")
 public class ColaboratorController {
+    
+    @GetMapping()
+    public ResponseEntity getColaborators(){
+        return ResponseEntity.ok("getColaborators success!!!");
+    }
     
 }

@@ -6,32 +6,30 @@
 package com.albo.marvel.models;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "relation")
+@Table(name = "characterComic")
 @Getter
 @Setter
-public class Relation {
+public class CharacterComic implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "hero_id", nullable = false)
+    private Hero hero;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "character_id", nullable = false)
-    private Character heroe;
-
-    @Id
-    @ManyToOne
     private Character character;
     
     @Id
@@ -39,8 +37,11 @@ public class Relation {
     @JoinColumn(name = "comic_id")
     private Comic comic;
 
-    public Relation(Character heroe, Character character, Comic comic) {
-        this.heroe = heroe;
+    public CharacterComic() {
+    }
+    
+    public CharacterComic(Hero hero, Character character, Comic comic) {
+        this.hero = hero;
         this.character = character;
         this.comic = comic;
     }

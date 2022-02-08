@@ -17,6 +17,7 @@ import com.albo.marvel.ws.models.ListAPI;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
 @Service
@@ -37,9 +38,11 @@ public class ScheduledServicesImp implements ScheduledServices {
     private HeroRepository heroRepository;
 
     @Override
-    @Scheduled(cron = "0 0 12 ? * *")
+    @Scheduled(cron = "0 0 1 * * *")
+    @Transactional
     public void syncData() {
         try {
+            LOG.info("Running sync data");
             updateData();
         } catch (NoSuchAlgorithmException e) {
             LOG.error(String.format("[Error MD5] :: %s", e.getMessage()));

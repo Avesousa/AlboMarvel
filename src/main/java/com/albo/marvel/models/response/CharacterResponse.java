@@ -6,8 +6,8 @@
 package com.albo.marvel.models.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +17,10 @@ import lombok.Setter;
 public class CharacterResponse {
     
     private String character;
-    private List<String> comics;
+    private Set<String> comics;
 
     public CharacterResponse() {
-        this.comics = new ArrayList<String>();
+        this.comics = new HashSet<String>();
     }
     
 }

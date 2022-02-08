@@ -1,25 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.albo.marvel.services.imp;
 
-import com.albo.marvel.ws.models.CharacterAPI;
+import com.albo.marvel.exception.NotFoundContentException;
 import com.albo.marvel.services.CharacterServices;
 import java.util.List;
-import com.albo.marvel.models.Character;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.albo.marvel.daos.RelationRepository;
-import com.albo.marvel.daos.CharacterRepository;
-import com.albo.marvel.models.Relation;
+import com.albo.marvel.repositories.CharacterRepository;
+import com.albo.marvel.models.CharacterComic;
+import com.albo.marvel.models.Hero;
+import com.albo.marvel.models.Character;
+import com.albo.marvel.models.Comic;
+import com.albo.marvel.models.response.CharacterResponse;
 import com.albo.marvel.models.response.CharactersResponse;
-import com.albo.marvel.ws.services.MarvelServices;
-import java.security.NoSuchAlgorithmException;
+import com.albo.marvel.repositories.CharacterComicRepository;
+import com.albo.marvel.repositories.ComicRepository;
+import com.albo.marvel.repositories.HeroRepository;
+import com.albo.marvel.ws.models.ComicAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @Service
 public class CharacterServicesImp implements CharacterServices {
@@ -30,39 +29,61 @@ public class CharacterServicesImp implements CharacterServices {
     private CharacterRepository characterRepository;
 
     @Autowired
-    private RelationRepository characterRelatedRepository;
+    private HeroRepository heroRepository;
 
     @Autowired
-    private MarvelServices marvelService;
+    private ComicRepository comicRepository;
+
+    @Autowired
+    private CharacterComicRepository characterComicRepository;
 
     @Override
-    public CharactersResponse find(String username) throws NoSuchAlgorithmException, HttpClientErrorException {
-        Character heroe = characterRepository.findByHeroe(username)
+    public CharactersResponse get(String username) throws NotFoundContentException {
+        try {
+            Hero hero = heroRepository.findByUsername(username);
+        CharactersResponse charactersResponse = new CharactersResponse();
+        charactersResponse.setLast_sync(hero.getLastSync());
+        for (CharacterComic characterComic : hero.getCharactersAndComics()) {
+            List<CharacterResponse> characters = charactersResponse.getCharacters();
+            CharacterResponse characterResponse = characters
+                    .stream()
+                    .filter((character) -> character
+                    .getCharacter()
+                    .equals(characterComic
+                            .getCharacter()
+                            .getName()))
+                    .findFirst().orElse(null);
+            if(characterResponse != null) {
+                characterResponse.getComics().add(characterComic.getComic().getTitle());
+            }else {
+                characterResponse = new CharacterResponse();
+                characterResponse.setCharacter(characterComic.getCharacter().getName());
+                characterResponse.getComics().add(characterComic.getComic().getTitle());
+                charactersResponse.getCharacters().add(characterResponse);
+            }
+        }
+        LOG.info(String.format("Characters obtained [%d/%s]", hero.getId(), hero.getName()));
+        return charactersResponse;
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundContentException(String.format("Characters not found for %s", username));
+        }
         
     }
-    
+
     @Override
-    public void updateData() {
-        List<Character> heroes = characterRepository.findOnlyUsername();
-        heroes.forEach(heroe -> {
-            try {
-                List<CharacterAPI> charactersAPI = marvelService.getCharacters(heroe.getId());
-                //Se eliminan todos los personajes para sincronizar.
-                characterRelatedRepository.DeleteByHeroe(heroe.getId());
-                //Se asigna al heroe los personajes realacionados.
-                charactersAPI.forEach(characterAPI -> {
-                    Character relatedCharacter = new Character(characterAPI.getId(), characterAPI.getName());
-                    characterRepository.save(relatedCharacter);
-                    characterRepository.save(heroe);
-                    characterRelatedRepository.save(heroe, relatedCharacter);
-                });
-            } catch (NoSuchAlgorithmException ex) {
-                LOG.error("An error has occurred converting the format");
-            } catch (HttpClientErrorException ex) {
-                LOG.error(String.format("[%d] %s", ex.getRawStatusCode(), ex.getResponseBodyAsString()));
-            }
-        });
-
+    public void update(List<ComicAPI> comics, Hero hero){
+        characterComicRepository.delete(hero.getId());
+        for (ComicAPI comicAPI : comics) {
+            Comic comic = new Comic(comicAPI.getTitle());
+            comicRepository.save(comic);
+            comicAPI.getCharacters().getItems().stream().forEach((characterAPI) -> {
+                Character character = new Character(characterAPI.getId(), characterAPI.getName());
+                characterRepository.save(character);
+                CharacterComic characterComic = new CharacterComic(hero, character, comic);
+                characterComicRepository.save(characterComic);
+            });
+        }
+        heroRepository.update(hero);
+        LOG.info(String.format("The characters have been successfully updated [%d/%s]", hero.getId(), hero.getName()));
     }
-
 }

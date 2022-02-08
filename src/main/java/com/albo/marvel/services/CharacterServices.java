@@ -1,13 +1,13 @@
 package com.albo.marvel.services;
 
-import java.util.List;
-import com.albo.marvel.models.Character;
+import com.albo.marvel.exception.NotFoundContentException;
+import com.albo.marvel.models.Hero;
 import com.albo.marvel.models.response.CharactersResponse;
-import java.security.NoSuchAlgorithmException;
-import org.springframework.web.client.HttpClientErrorException;
+import com.albo.marvel.ws.models.ComicAPI;
+import java.util.List;
 
 public interface CharacterServices {
     
-    CharactersResponse find(String username) throws NoSuchAlgorithmException, HttpClientErrorException;
-    void updateData();
+    CharactersResponse get(String username) throws NotFoundContentException;
+    void update(List<ComicAPI> comics, Hero hero);
 }

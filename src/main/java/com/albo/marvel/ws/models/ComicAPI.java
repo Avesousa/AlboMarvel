@@ -12,4 +12,5 @@ public class ComicAPI {
     private String title;
     private String description;
     private ListAPI<CreatorAPI> creators;
+    private ListAPI<CharacterAPI> characters;
 }

@@ -6,6 +6,7 @@
 package com.albo.marvel.ws.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,5 +15,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ListAPI<T> {
+    private Integer characterId;
     private List<T> items;
+
+    public ListAPI() {
+        this.items = new ArrayList<T>();
+    }
 }

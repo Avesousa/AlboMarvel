@@ -1,12 +1,12 @@
 package com.albo.marvel.repositories;
 
-import org.springframework.stereotype.Repository;
-import com.albo.marvel.models.Hero;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import com.albo.marvel.models.Hero;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class HeroRepository implements AlboRepository<Hero> {

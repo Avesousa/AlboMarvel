@@ -1,9 +1,9 @@
 package com.albo.marvel.ws.services;
 
-import com.albo.marvel.ws.models.ComicAPI;
+import java.util.List;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import com.albo.marvel.ws.models.ComicAPI;
 import org.springframework.web.client.HttpClientErrorException;
 
 public interface MarvelServices {

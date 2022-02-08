@@ -1,10 +1,10 @@
 package com.albo.marvel.services;
 
-import com.albo.marvel.exception.NotFoundContentException;
+import java.util.List;
 import com.albo.marvel.models.Hero;
 import com.albo.marvel.models.response.CharactersResponse;
 import com.albo.marvel.ws.models.ComicAPI;
-import java.util.List;
+import com.albo.marvel.exception.NotFoundContentException;
 
 public interface CharacterServices {
     

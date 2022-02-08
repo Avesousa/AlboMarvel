@@ -1,10 +1,10 @@
 package com.albo.marvel.repositories;
 
-import org.springframework.stereotype.Repository;
-import com.albo.marvel.models.Collaborator;
 import java.util.List;
 import javax.persistence.EntityManager;
+import com.albo.marvel.models.Collaborator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class CollaboratorRepository implements AlboRepository<Collaborator> {

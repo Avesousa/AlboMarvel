@@ -1,7 +1,6 @@
 package com.albo.marvel.ws.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 

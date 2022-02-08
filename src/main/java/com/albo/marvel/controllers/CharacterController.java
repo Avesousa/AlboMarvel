@@ -1,18 +1,15 @@
 package com.albo.marvel.controllers;
 
-import com.albo.marvel.exception.NotFoundContentException;
-import com.albo.marvel.models.response.CharactersResponse;
-import com.albo.marvel.models.response.CollaboratorsResponse;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import com.albo.marvel.services.CharacterServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import com.albo.marvel.services.CharacterServices;
+import com.albo.marvel.exception.NotFoundContentException;
+import com.albo.marvel.models.response.CharactersResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("characters")
 @EnableAutoConfiguration
 public class CharacterController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(CharacterController.class);
 
     @Autowired
     private CharacterServices characterServices;

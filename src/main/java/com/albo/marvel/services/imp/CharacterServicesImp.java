@@ -1,24 +1,24 @@
 package com.albo.marvel.services.imp;
 
-import com.albo.marvel.exception.NotFoundContentException;
-import com.albo.marvel.services.CharacterServices;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.albo.marvel.repositories.CharacterRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.albo.marvel.models.CharacterComic;
 import com.albo.marvel.models.Hero;
 import com.albo.marvel.models.Character;
 import com.albo.marvel.models.Comic;
 import com.albo.marvel.models.response.CharacterResponse;
 import com.albo.marvel.models.response.CharactersResponse;
+import com.albo.marvel.services.CharacterServices;
+import com.albo.marvel.repositories.CharacterRepository;
 import com.albo.marvel.repositories.CharacterComicRepository;
 import com.albo.marvel.repositories.ComicRepository;
 import com.albo.marvel.repositories.HeroRepository;
 import com.albo.marvel.ws.models.ComicAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.albo.marvel.exception.NotFoundContentException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CharacterServicesImp implements CharacterServices {

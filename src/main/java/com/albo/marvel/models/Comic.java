@@ -1,14 +1,14 @@
 package com.albo.marvel.models;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
+import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "comic")

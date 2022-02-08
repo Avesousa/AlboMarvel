@@ -1,9 +1,9 @@
 package com.albo.marvel.repositories;
 
-import org.springframework.stereotype.Repository;
-import com.albo.marvel.models.Comic;
 import java.util.List;
 import javax.persistence.EntityManager;
+import com.albo.marvel.models.Comic;
+import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Repository

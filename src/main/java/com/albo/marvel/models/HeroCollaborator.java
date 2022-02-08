@@ -1,13 +1,13 @@
 package com.albo.marvel.models;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.Id;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "heroCollaborator")

@@ -1,9 +1,9 @@
 package com.albo.marvel.repositories;
 
-import com.albo.marvel.models.HeroCollaborator;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.EntityManager;
+import com.albo.marvel.models.HeroCollaborator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

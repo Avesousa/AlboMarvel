@@ -1,11 +1,11 @@
 package com.albo.marvel.models.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.HashSet;
+import java.util.Date;
+import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Setter

@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.albo.marvel.daos;
+package com.albo.marvel.repositories;
 
 import java.util.List;
 
 public interface AlboRepository<T> {
     T save(T entity);
-    List<T> save(List<T> entities);
-    T findById(Integer id);
-    T findByHeroe(String username);
+    T findById(Object id);
     List<T> findAll();
-    void delete(Integer id);
+    void delete(Object id);
 }

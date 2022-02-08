@@ -1,44 +1,38 @@
-package com.albo.marvel.daos;
+package com.albo.marvel.repositories;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import com.albo.marvel.models.Character;
-import java.util.ArrayList;
-import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CharacterRepository {
+public class CharacterRepository implements AlboRepository<Character> {
 
     @Autowired
     private EntityManager em;
 
+    @Override
     public Character save(Character entity) {
         em.persist(entity);
         return entity;
     }
-    
-    public List<Character> findOnlyUsername(){
-        TypedQuery<Character> query = em.createQuery("SELECT * FROM character c WHERE c.username IS NOT NULL", Character.class);
-        return query.getResultList(); 
-    }
 
-    public Character findById(Integer id) {
+    @Override
+    public Character findById(Object id) {
         return em.find(Character.class, id);
     }
 
-    public Character findByHeroe(String username) {
-        TypedQuery<Character> query = em.createQuery("SELECT * FROM character c WHERE c.username = :username", Character.class);
-        query.setParameter("username", username);
-        return query.getSingleResult();
+    @Override
+    public List<Character> findAll() {
+        return em.createNativeQuery("SELECT * FROM CHARACTER", Character.class).getResultList();
     }
 
-    public void delete(Integer id) {
-        Character entity = this.findById(id);
+    @Override
+    public void delete(Object id) {
+        Character entity = findById(id);
         if (em.contains(entity)) {
             em.remove(entity);
         }
     }
-
 }

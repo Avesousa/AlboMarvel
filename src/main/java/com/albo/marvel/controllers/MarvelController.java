@@ -26,7 +26,7 @@ public class MarvelController {
     @Operation(summary = "Synchronize information")
     @PutMapping
     @Transactional
-    public ResponseEntity syncData() throws NoSuchAlgorithmException, HttpClientErrorException, IOException {
+    public ResponseEntity<String> syncData() throws NoSuchAlgorithmException, HttpClientErrorException, IOException {
         scheduledServices.updateData();
         return ResponseEntity.ok("Data sync successfully");
     }

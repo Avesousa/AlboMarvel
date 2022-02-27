@@ -37,18 +37,18 @@ public class MarvelControllerTest {
     private RestTemplate restTemplate;
 
     @Test
-    void syncDataOk() {
+    void testSyncDataOk() {
         LOG.info("Started test of sync data");
         try{
             mvc.perform(put("/")).andExpect(content().string("Data sync successfully"));
+            LOG.info("Ends test of sync data!");
         }catch(Exception e){
             TestError.log(MarvelControllerTest.class, e);
         }
-        LOG.info("Ends test of sync data!");
     }
 
     @Test
-    void syncDataEndpointAndMethodNotOk() {
+    void testSyncDataEndpointAndMethodNotOk() {
         LOG.info("Started test of sync data with endpoint and method that not ok");
         try{
             LOG.info("Testing method GET!");
@@ -59,9 +59,9 @@ public class MarvelControllerTest {
             mvc.perform(delete("/")).andExpect(status().isMethodNotAllowed());
             LOG.info("Testing other endpoint");
             mvc.perform(put("/test")).andExpect(status().isNotFound());
+            LOG.info("Ends test of sync data with endpoint and method that not ok");
         }catch(Exception e){
             TestError.log(MarvelControllerTest.class, e);
         }
-        LOG.info("Ends test of sync data with endpoint and method that not ok");
     }
 }
